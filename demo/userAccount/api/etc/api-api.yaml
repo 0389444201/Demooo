@@ -1,0 +1,7 @@
+Name: api-api
+Host: 0.0.0.0
+Port: 8888
+DataSource: root:my-secret-pw@tcp(127.0.0.1:3306)/user
+Auth:
+  AccessSecret: 123k123bk12jb33k31l
+  AccessExpire: 9000000

@@ -1,0 +1,109 @@
+type (
+	LoginRequest {
+		Name     string `json:"name"`
+		Password string `json:"password"`
+	}
+	LoginResponse {
+		AccessToken string `json:"access_token"`
+		Errror      string `json:"error"`
+	}
+
+	InfoRequest {
+		Name string `json:"name"`
+	}
+	InfoResponse {
+		Name   string `json:"name"`
+		Email  string `json:"email"`
+		Gender string `json:"gender"`
+	}
+
+	GetAll {
+	}
+
+	ResponseGetAll {
+		Id     int64  `db:"id"`
+		Email  string `db:"email"`
+		Name   string `db:"name"`
+		Gender string `db:"gender"`
+	}
+
+	RegisterRequest {
+		Name     string `json:"name"`
+		Password string `json:"password"`
+		Email    string `json:"email"`
+		Gender   string `json:"gender"`
+	}
+	RegisterResponse {
+		Name   string `json:"name"`
+		Email  string `json:"email"`
+		Gender string `json:"gender"`
+	}
+
+	DeleteRequest {
+	}
+	DeleteResponse {
+	}
+
+	UpdateRequest {
+		Password string `json:"password"`
+		Email    string `json:"email"`
+		Gender   string `json:"gender"`
+	}
+	UpdateResponse {
+		Name   string `json:"name"`
+		Email  string `json:"email"`
+		Gender string `json:"gender"`
+	}
+)
+@server(
+	
+	middlerware: AcessMiddlerWare
+)
+service api-api {
+	@handler AccountLoginHandler
+	post /api/login(LoginRequest) returns (LoginResponse)
+}
+
+@server(
+	middlerware: AcessMiddlerWare
+)
+service api-api {
+	@handler AccountRegisterHandler
+	post /api/register(RegisterRequest) returns (RegisterResponse)
+}
+
+@server(
+	jwt: Auth
+	middlerware: AcessMiddlerWare
+)
+service api-api {
+	@handler AccountGetInfoHandler
+	get /api/info(InfoRequest) returns (InfoResponse)
+}
+
+@server(
+	jwt: Auth
+	middlerware: AcessMiddlerWare
+)
+service api-api {
+	@handler AccountGetAllHandler
+	get /api/infoAll(GetAll) returns (ResponseGetAll)
+}
+
+@server(
+	jwt: Auth
+	middlerware: AcessMiddlerWare
+)
+service api-api {
+	@handler AccountDeleteHandler
+	delete /api/delete(DeleteRequest)
+}
+
+@server(
+	jwt: Auth
+	middlerware: AcessMiddlerWare
+)
+service api-api {
+	@handler AccountUpdateHandler
+	put /api/update(UpdateRequest) returns (UpdateResponse)
+}
