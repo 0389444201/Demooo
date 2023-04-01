@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
@@ -33,8 +32,6 @@ func NewUserTableModel(conn sqlx.SqlConn) UserTableModel {
 		defaultUserTableModel: newUserTableModel(conn),
 	}
 }
-
-// /////
 
 func (m *defaultUserTableModel) FindByName(ctx context.Context, name string) (*UserTable, error) {
 	query := fmt.Sprintf("select %v from %v where `name` = ? limit 1", userTableRows, m.table)
@@ -65,7 +62,13 @@ func (m *defaultUserTableModel) UpdateByName(ctx context.Context, data *UserTabl
 func (m *defaultUserTableModel) GetAll(ctx context.Context) ([]UserTable, error) {
 	var resp []UserTable
 	query := fmt.Sprintf("SELECT * FROM %v ;", m.table)
-	m.conn.QueryRowsCtx(ctx, &resp, query)
-	logx.Info(resp)
-	return resp, nil
+	err := m.conn.QueryRowsCtx(ctx, &resp, query)
+	switch err {
+	case nil:
+		return resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
 }
