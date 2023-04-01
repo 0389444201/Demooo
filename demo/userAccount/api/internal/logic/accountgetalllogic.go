@@ -5,6 +5,7 @@ import (
 
 	"demo/userAccount/api/internal/svc"
 	"demo/userAccount/api/internal/types"
+	"demo/userAccount/models"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,27 +26,22 @@ func NewAccountGetAllLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Acc
 
 func (l *AccountGetAllLogic) AccountGetAll(req *types.GetAll) (*[]types.ResponseGetAll, error) {
 	// todo: add your logic here and delete this line
-	var arr []types.ResponseGetAll
 	result, err := l.svcCtx.UserModel.GetAll(l.ctx)
 
 	if err != nil {
-		l.Logger.Infof("error occured while get info")
+		return nil, err
 	}
-	for i := 0; i < len(result); i++ {
-		rs := types.ResponseGetAll{
-			Name:  result[i].Name,
-			Email: result[i].Email,
-		}
-		arr = append(arr, rs)
-	}
-	msg := types.ResponseGetAll{
-		Error: "DB is empty",
-	}
-	if arr == nil {
-		return &[]types.ResponseGetAll{
-			msg,
-		}, nil
-	}
-
+	arr := setValues(result)
 	return &arr, nil
+}
+func setValues(result []models.UserTable) (arr []types.ResponseGetAll) {
+	for i := 0; i < len(result); i++ {
+		setValues := types.ResponseGetAll{
+			Name:   result[i].Name,
+			Email:  result[i].Email,
+			Gender: result[i].Gender,
+		}
+		arr = append(arr, setValues)
+	}
+	return arr
 }
