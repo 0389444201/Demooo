@@ -19,7 +19,7 @@ type (
 		FindByName(ctx context.Context, name string) (*UserTable, error)
 		DeleteByName(ctx context.Context, name string) error
 		UpdateByName(ctx context.Context, data *UserTable) error
-		GetAll(ctx context.Context) ([]Table, error)
+		GetAll(ctx context.Context) ([]UserTable, error)
 	}
 
 	customUserTableModel struct {
@@ -35,12 +35,6 @@ func NewUserTableModel(conn sqlx.SqlConn) UserTableModel {
 }
 
 // /////
-type Table struct {
-	Id     int64  `db:"id"`
-	Email  string `db:"email"`
-	Name   string `db:"name"`
-	Gender string `db:"gender"`
-}
 
 func (m *defaultUserTableModel) FindByName(ctx context.Context, name string) (*UserTable, error) {
 	query := fmt.Sprintf("select %v from %v where `name` = ? limit 1", userTableRows, m.table)
@@ -68,8 +62,8 @@ func (m *defaultUserTableModel) UpdateByName(ctx context.Context, data *UserTabl
 	return err
 }
 
-func (m *defaultUserTableModel) GetAll(ctx context.Context) ([]Table, error) {
-	var resp []Table
+func (m *defaultUserTableModel) GetAll(ctx context.Context) ([]UserTable, error) {
+	var resp []UserTable
 	query := fmt.Sprintf("SELECT * FROM %v ;", m.table)
 	m.conn.QueryRowsCtx(ctx, &resp, query)
 	logx.Info(resp)

@@ -25,10 +25,11 @@ type GetAll struct {
 }
 
 type ResponseGetAll struct {
-	Id     int64  `db:"id"`
-	Email  string `db:"email"`
-	Name   string `db:"name"`
-	Gender string `db:"gender"`
+	Id     int64  `json:"id"`
+	Name   string `json:"name"`
+	Email  string `json:"email"`
+	Gender string `json:"gender"`
+	Error  string `json:"error"`
 }
 
 type RegisterRequest struct {
