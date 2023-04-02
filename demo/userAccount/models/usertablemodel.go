@@ -63,6 +63,9 @@ func (m *defaultUserTableModel) GetAll(ctx context.Context) ([]UserTable, error)
 	var resp []UserTable
 	query := fmt.Sprintf("SELECT * FROM %v ;", m.table)
 	err := m.conn.QueryRowsCtx(ctx, &resp, query)
+	if resp == nil {
+		return nil, ErrNotFound
+	}
 	switch err {
 	case nil:
 		return resp, nil
