@@ -27,13 +27,18 @@ func NewAccountGetAllLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Acc
 func (l *AccountGetAllLogic) AccountGetAll(req *types.GetAll) (*[]types.ResponseGetAll, error) {
 	// todo: add your logic here and delete this line
 	result, err := l.svcCtx.UserModel.GetAll(l.ctx)
-
+	msg := types.ResponseGetAll{
+		Error: "Error occured while getting DB",
+	}
 	if err != nil {
-		return nil, err
+		return &[]types.ResponseGetAll{
+			msg,
+		}, err
 	}
 	arr := setValues(result)
 	return &arr, nil
 }
+
 func setValues(result []models.UserTable) (arr []types.ResponseGetAll) {
 	for i := 0; i < len(result); i++ {
 		setValues := types.ResponseGetAll{

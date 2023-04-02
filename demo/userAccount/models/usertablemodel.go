@@ -66,8 +66,6 @@ func (m *defaultUserTableModel) GetAll(ctx context.Context) ([]UserTable, error)
 	switch err {
 	case nil:
 		return resp, nil
-	case sqlc.ErrNotFound:
-		return nil, ErrNotFound
 	default:
 		return nil, err
 	}
