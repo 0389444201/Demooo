@@ -43,6 +43,7 @@ type RegisterResponse struct {
 	Name   string `json:"name"`
 	Email  string `json:"email"`
 	Gender string `json:"gender"`
+	Errror string `json:"error"`
 }
 
 type DeleteRequest struct {

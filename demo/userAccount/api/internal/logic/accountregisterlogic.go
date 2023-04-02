@@ -42,7 +42,10 @@ func (l *AccountRegisterLogic) AccountRegister(req *types.RegisterRequest) (resp
 	_, err = l.svcCtx.UserModel.Insert(l.ctx, &user)
 
 	if err != nil {
-		l.Logger.Errorf("failed to register account")
+		return &types.RegisterResponse{
+			Errror: "failed to register account",
+		}, nil
+
 	}
 	return &types.RegisterResponse{
 		Name:   req.Name,

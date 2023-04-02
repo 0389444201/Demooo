@@ -31,7 +31,7 @@ func (l *AccountLoginLogic) AccountLogin(req *types.LoginRequest) (resp *types.L
 	if err != nil {
 		return nil, models.ErrNotFound
 	}
-	passwordIsvalid, msg := helpers.VerifyPassword(user.Password, helpers.HashPassword(req.Password))
+	passwordIsvalid, msg := helpers.VerifyPassword(user.Password, req.Password)
 	if !passwordIsvalid {
 		return &types.LoginResponse{
 			Errror: msg,

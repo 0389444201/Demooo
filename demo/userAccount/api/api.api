@@ -38,6 +38,7 @@ type (
 		Name   string `json:"name"`
 		Email  string `json:"email"`
 		Gender string `json:"gender"`
+		Errror string `json:"error"`
 	}
 
 	DeleteRequest {
