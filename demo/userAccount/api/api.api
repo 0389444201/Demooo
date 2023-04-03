@@ -40,7 +40,13 @@ type (
 		Gender string `json:"gender"`
 		Errror string `json:"error"`
 	}
-
+	ExportFile {
+		Id     int64  `json:"id"`
+		Name   string `json:"name"`
+		Email  string `json:"email"`
+		Gender string `json:"gender"`
+		Errror string `json:"error"`
+	}
 	DeleteRequest {
 	}
 	DeleteResponse {
@@ -108,4 +114,9 @@ service api-api {
 service api-api {
 	@handler AccountUpdateHandler
 	put /api/update(UpdateRequest) returns (UpdateResponse)
+}
+
+service api-api{
+	@handler ExportFileHandler
+	get /api/export()
 }

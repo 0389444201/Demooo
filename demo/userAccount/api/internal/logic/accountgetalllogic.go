@@ -35,13 +35,14 @@ func (l *AccountGetAllLogic) AccountGetAll(req *types.GetAll) (*[]types.Response
 			msg,
 		}, err
 	}
-	arr := setValues(result)
+	arr := SetValues(result)
 	return &arr, nil
 }
 
-func setValues(result []models.UserTable) (arr []types.ResponseGetAll) {
+func SetValues(result []models.UserTable) (arr []types.ResponseGetAll) {
 	for i := 0; i < len(result); i++ {
 		setValues := types.ResponseGetAll{
+			Id:     result[i].Id,
 			Name:   result[i].Name,
 			Email:  result[i].Email,
 			Gender: result[i].Gender,
