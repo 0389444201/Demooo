@@ -47,10 +47,6 @@ type RegisterResponse struct {
 }
 
 type ExportFile struct {
-	Id     int64  `json:"id"`
-	Name   string `json:"name"`
-	Email  string `json:"email"`
-	Gender string `json:"gender"`
 	Errror string `json:"error"`
 }
 

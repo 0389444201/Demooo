@@ -41,10 +41,6 @@ type (
 		Errror string `json:"error"`
 	}
 	ExportFile {
-		Id     int64  `json:"id"`
-		Name   string `json:"name"`
-		Email  string `json:"email"`
-		Gender string `json:"gender"`
 		Errror string `json:"error"`
 	}
 	DeleteRequest {
@@ -118,5 +114,5 @@ service api-api {
 
 service api-api{
 	@handler ExportFileHandler
-	get /api/export()
+	get /api/export() returns(ExportFile)
 }

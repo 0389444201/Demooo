@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"demo/userAccount/api/internal/svc"
+	"demo/userAccount/api/internal/types"
 	"demo/userAccount/api/internal/utils"
 
 	"github.com/zeromicro/go-zero/core/logx"
@@ -23,18 +24,20 @@ func NewExportFileLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Export
 	}
 }
 
-func (l *ExportFileLogic) ExportFile() error {
+func (l *ExportFileLogic) ExportFile() (*types.ExportFile, error) {
 	// todo: add your logic here and delete this line
 	data, err := l.svcCtx.UserModel.GetAll(l.ctx)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	arr := SetValues(data)
 
 	err = utils.ExportFile(arr)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return &types.ExportFile{
+		Errror: "Successfull",
+	}, nil
 }

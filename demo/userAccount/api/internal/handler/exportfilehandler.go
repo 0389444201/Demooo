@@ -11,11 +11,11 @@ import (
 func ExportFileHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		l := logic.NewExportFileLogic(r.Context(), svcCtx)
-		err := l.ExportFile()
+		resp, err := l.ExportFile()
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {
-			httpx.Ok(w)
+			httpx.OkJsonCtx(r.Context(), w, resp)
 		}
 	}
 }
